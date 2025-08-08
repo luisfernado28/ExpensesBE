@@ -11,12 +11,7 @@
       - pgdata:/var/lib/postgresql/data 
     ports:
       - "5433:5432"
- 
-  # adminer:
-  #   image: adminer user postgres password asdf
-  #   restart: always
-  #   ports:
-  #     - 8080:8080
+
  
 volumes:
   pgdata:
