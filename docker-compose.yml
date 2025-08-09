@@ -12,6 +12,21 @@
     ports:
       - "5433:5432"
 
- 
+  webapi:
+    image: expensesbe:latest
+    restart: always
+    env_file:
+      - path: ./.env
+        required: true # default
+    environment:
+      ASPNETCORE_ENVIRONMENT: "Development"
+      ConnectionStrings__DefaultConnection: ${ConnectionString}
+    ports:
+      - "5000:8080"
+    depends_on:
+      - db
+
+
+
 volumes:
   pgdata:
