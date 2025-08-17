@@ -26,6 +26,14 @@
     depends_on:
       - db
 
+  webapp:
+    image: reactexpenses:latest
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - webapi
+
 
 
 volumes:
