@@ -68,7 +68,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ secrets.MY_ECR_REGISTRY }}
-        ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}   # nombre del repo en ECR
+        ECR_REPOSITORY: ${{ secrets.MY_ECR_REPOSITORY }}   # nombre del repo en ECR
         IMAGE_TAG: ${{ github.sha }}
       run: |
         IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
