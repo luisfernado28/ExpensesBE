@@ -30,15 +30,12 @@ on:
   push:
     branches: [ "master" ]
 
+
 env:
-  AWS_REGION: ${{ secrets.AWS_REGION }}                # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: expensespublic           # set this to your Amazon ECR repository name
-  # ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
-  # ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
-  # ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
-                                               # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: expensesBE           # set this to the name of the container in the
-                                               # containerDefinitions section of your task definition
+  AWS_REGION: us-east-1                          # ECR Public siempre usa us-east-1
+  ECR_PUBLIC_REGISTRY_ALIAS: v1f7d2c1             # tu alias público en ECR
+  ECR_REPOSITORY: expensespublic
+  IMAGE_TAG: ${{ github.sha }}
 
 permissions:
   contents: read
@@ -60,22 +57,17 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ${{ secrets.AWS_REGION }}
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v2
-
-    - name: Build and push Docker image
-      id: build-image
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: expensespublic   # nombre del repo en ECR
-        IMAGE_TAG: ${{ github.sha }}
+    - name: Login to Amazon ECR Public
       run: |
-        IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+        aws ecr-public get-login-password --region us-east-1 \
+          | docker login --username AWS --password-stdin public.ecr.aws
+
+    - name: Build, tag, and push image
+      run: |
+        IMAGE_URI=public.ecr.aws/${{ env.ECR_PUBLIC_REGISTRY_ALIAS }}/${{ env.ECR_REPOSITORY }}:${{ env.IMAGE_TAG }}
         echo "Building $IMAGE_URI"
         docker build -t $IMAGE_URI .
         docker push $IMAGE_URI
-        echo "image=$IMAGE_URI" >> $GITHUB_OUTPUT
 
     #- name: Fill in the new image ID in the Amazon ECS task definition
     #  id: task-def
