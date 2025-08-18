@@ -32,7 +32,7 @@ on:
 
 env:
   AWS_REGION: ${{ secrets.AWS_REGION }}                # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: ${{ secrets.MY_ECR_REPOSITORY }}            # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: v1f7d2c1/expensespublic           # set this to your Amazon ECR repository name
   # ECS_SERVICE: MY_ECS_SERVICE                 # set this to your Amazon ECS service name
   # ECS_CLUSTER: MY_ECS_CLUSTER                 # set this to your Amazon ECS cluster name
   # ECS_TASK_DEFINITION: MY_ECS_TASK_DEFINITION # set this to the path to your Amazon ECS task definition
@@ -68,7 +68,7 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ${{ secrets.MY_ECR_REPOSITORY }}   # nombre del repo en ECR
+        ECR_REPOSITORY: v1f7d2c1/expensespublic   # nombre del repo en ECR
         IMAGE_TAG: ${{ github.sha }}
       run: |
         IMAGE_URI=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
