@@ -73,7 +73,7 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        IMAGE_URI=${{ secrets.MY_ECR_REGISTRY}}/${secrets.MY_ECR_REPOSITORY}}:$IMAGE_TAG
+        IMAGE_URI=${{ secrets.MY_ECR_REGISTRY}}/${{secrets.MY_ECR_REPOSITORY}}:$IMAGE_TAG
         docker build -t  $IMAGE_URI .
         docker push  $IMAGE_URI
         echo "image=  $IMAGE_URI" >> $GITHUB_OUTPUT
