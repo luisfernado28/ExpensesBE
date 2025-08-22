@@ -38,7 +38,7 @@ jobs:
 
     - name: Build, tag, and push image
       run: |
-        IMAGE_URI=public.ecr.aws/${{ secrets.MY_ECR_REPOSITORY }}:latest
+        IMAGE_URI=${{ secrets.MY_ECR_REPOSITORY }}:latest
         echo "Building $IMAGE_URI"
         docker build -t $IMAGE_URI .
         docker push $IMAGE_URI
