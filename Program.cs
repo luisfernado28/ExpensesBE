@@ -13,7 +13,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173", "http://localhost:3000", "http://localhost", "http://54.205.201.69:3000/" , "https://d1qik5oy2rfrfs.cloudfront.net/") 
+            policy.WithOrigins("http://localhost:5173", "http://localhost:3000", "http://localhost", "http://54.205.201.69:3000/" , "https://d1qik5oy2rfrfs.cloudfront.net") 
                   .AllowAnyHeader()
                   .AllowAnyMethod();
         });
