@@ -46,7 +46,6 @@ app.Use(async (context, next) =>
     Console.WriteLine($"Incoming request from IP: {remoteIp}");
     await next();
 });
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
