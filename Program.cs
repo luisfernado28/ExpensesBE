@@ -40,7 +40,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.Use(async (context, next) =>
+{
+    var remoteIp = context.Connection.RemoteIpAddress;
+    Console.WriteLine($"Incoming request from IP: {remoteIp}");
+    await next();
+});
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
