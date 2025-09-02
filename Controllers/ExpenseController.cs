@@ -92,5 +92,21 @@ namespace ExpensesBE.Controllers
             }
             return NoContent();
         }
+
+        [HttpGet("/health")]
+        public IActionResult Health()
+        {
+            // Simple health check: verify database connectivity
+            try
+            {
+                // Attempt to access the database
+                _context.Database.CanConnect();
+                return Ok(new { status = "Healthy" });
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status503ServiceUnavailable, new { status = "Unhealthy" });
+            }
+        }
     }
 }
